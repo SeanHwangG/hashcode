@@ -7,7 +7,7 @@ class Image:
         self.id = id
         self.tags = tags
         self.orientation = orientation # v / h
-    
+
     @classmethod
     def read_input(cls, file_name) -> List["Image"]:
         images = []

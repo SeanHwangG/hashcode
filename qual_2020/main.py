@@ -58,7 +58,7 @@ class Library:
 
     @staticmethod
     def order_books(libraries, type_="baseline") -> List["Library"]:
-        # sort : 
+        # sort :
         # update : max_i
         if type_ == "baseline":
             ordered_libraries = []
@@ -70,8 +70,8 @@ class Library:
                 library.books = library.books[:book_capacity]
                 ordered_libraries.append(library)
             return ordered_libraries
-        elif type_ == "": 
-            # Donghyun 
+        elif type_ == "":
+            # Donghyun
             # left_day * book_perday [n_books]
             # score = id
             # Library 1 [5] : 10 7 6 4 3 | 2 0
@@ -86,7 +86,7 @@ class Library:
                 library.books.sort(key=lambda book: book.score, reverse=True)
                 cur_day += library.signin_length   # udpate current date
                 book_capacity = max(Library.total_day - cur_day, 0) * library.book_per_day # Ignore duplicate, just copy with highest score first
-                Book.book_id2count.update(library.books[:book_capacity])                   # update Counter 
+                Book.book_id2count.update(library.books[:book_capacity])                   # update Counter
 
             repeated_book_ids = [book_id for book_id, count in Book.book_id2count.items() if count > 1]    # books more than 2 counts
             while len(repeated_book_ids) > 1:
@@ -96,17 +96,16 @@ class Library:
                 # Structure : [Book_id, [library_ids]]
                 #
                 # ex) duplicates = [(0, [A,B]), (2, [A,D,E]), (4, [B,C]), ...]
-                # 
+                #
                 # <PSUEDO CODE>
                 #
                 # while !duplicates.empty() {
                 #   dup = duplicates.pop()
-                #      
+                #
                 #   for library_id in dup.second:
                 #       # 1. Select best library to scan the according book
                 #       # 2. Remove the book from lists of the rest library
                 # }
-                
 
     @staticmethod
     def to_output(libraries, filename):
@@ -119,7 +118,7 @@ class Library:
 
 class Book:
     book_id2count = Counter()
-    
+
     def __init__(self, id: int, score: int, library_ids = None):
         self.id = id
         self.score = score
@@ -131,7 +130,7 @@ class Book:
 def parse_input(file_name: str) -> List["Library"]:
     logger.info(file_name)
     # Eunsoo
-    libraries = []   
+    libraries = []
     with open(file_name, "r") as f:
         n_book, n_library, n_day = map(int, f.readline().split())
         Library.total_day = n_day
@@ -170,5 +169,3 @@ if __name__ == "__main__":
     # order library | order book | score
     # baseline      | baseline   | 68773405
     #               |            | 68773405
-
-            
